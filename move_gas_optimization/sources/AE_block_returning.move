@@ -11,7 +11,7 @@ module move_gas_optimization::AE_block_returning{
     /// Checking for gas cost if a block is within code and returns a value
     entry fun block_runs_code_and_returns(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let num:u64 = {
                 2 + 2   // since no semicolon after the expression within block
                         // this value is returned.
@@ -23,7 +23,7 @@ module move_gas_optimization::AE_block_returning{
     /// Checking for gas cost if there is no block within code
     entry fun no_block_returning(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let num:u64 = 2 + 2;    //expression is not done wtihin a block
             i = i + 1;
         }
