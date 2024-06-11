@@ -10,7 +10,7 @@ module move_gas_optimization::AC_empty_block{
     /// Checking for gas cost if a block is within code but is empty
     entry fun empty_block(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             //Code block begins:
             {
                 //compiler will automatically replace with an empty expression ()
@@ -25,7 +25,7 @@ module move_gas_optimization::AC_empty_block{
     /// no code run within.
     entry fun empty_no_code_block(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             //no code block
             i = i + 1;
         }
