@@ -17,7 +17,7 @@ module move_gas_optimization::AF_num_values_func_returns{
         let mut result_1 = 0; 
         let mut result_2 = 0;
 
-        while(i < 1000){
+        while(i < 10000){
             i = i + 1;
             result_1 = helper_returns_one(arg);
             result_1 = 0;
@@ -39,7 +39,7 @@ module move_gas_optimization::AF_num_values_func_returns{
         let mut result_1 = 0; 
         let mut result_2 = 0;
 
-        while(i < 1000){
+        while(i < 10000){
             i = i + 1;
             (result_1, result_2) = helper_returns_two(arg);
             result_1 = 0;
