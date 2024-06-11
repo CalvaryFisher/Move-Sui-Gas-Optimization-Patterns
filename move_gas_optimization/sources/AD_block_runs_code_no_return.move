@@ -11,7 +11,7 @@ module move_gas_optimization::AD_block_runs_code_no_return{
     entry fun block_runs_code_no_return(){
         let mut i:u64 = 0;
         let mut k = 0;
-        while(i < 1000){
+        while(i < 10000){
             {
                 k = k + 1;  // due to semicolon on last line: no return value
             };
@@ -23,7 +23,7 @@ module move_gas_optimization::AD_block_runs_code_no_return{
     entry fun no_block_no_return(){
         let mut i:u64 = 0;
         let mut k = 0;
-        while(i < 1000){
+        while(i < 10000){
             k = k + 1;      //expression is not done wtihin a block
             i = i + 1;
         }
