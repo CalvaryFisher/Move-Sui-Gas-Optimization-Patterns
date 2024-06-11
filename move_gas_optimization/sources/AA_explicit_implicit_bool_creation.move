@@ -7,7 +7,7 @@ module move_gas_optimization::AA_explicit_implicit_bool_creation{
     /// explicitly declares as boolean, and assigns a value
     entry fun explicitly_make_bool(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let test_bool:bool = true;
             
             i = i + 1;
@@ -18,7 +18,7 @@ module move_gas_optimization::AA_explicit_implicit_bool_creation{
     /// implicitly declares as boolean, and assigns a value
     entry fun implicitly_make_bool(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let test_bool = true;
             
             i = i + 1;
