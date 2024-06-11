@@ -11,7 +11,7 @@ module move_gas_optimization::AB_compare_int_type_costs{
     /// (declared without assigning a value)
     entry fun declare_u8(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let test_u8:u8;
             
             i = i + 1;
@@ -21,7 +21,7 @@ module move_gas_optimization::AB_compare_int_type_costs{
     // Declaration of a u256 variable
     entry fun declare_u256(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let test_256:u256;
             
             i = i + 1;
@@ -37,7 +37,7 @@ module move_gas_optimization::AB_compare_int_type_costs{
     entry fun assign_u8(): u8{
         let mut i:u64 = 0;
         let mut test_u8:u8 = 0;
-        while(i < 1000){
+        while(i < 10000){
             test_u8 = 2;
             
             i = i + 1;
@@ -49,7 +49,7 @@ module move_gas_optimization::AB_compare_int_type_costs{
     entry fun assign_u256(): u256{
         let mut i:u64 = 0;
         let mut test_256 = 0;
-        while(i < 1000){
+        while(i < 10000){
             test_256 = 2;
             
             i = i + 1;
@@ -61,7 +61,7 @@ module move_gas_optimization::AB_compare_int_type_costs{
     /// Addition of two u8 variables
     entry fun add_u8(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let num1:u8 = 2;
             let num2:u8 = 3;
             let num3:u8 = num1 + num2;
@@ -73,10 +73,35 @@ module move_gas_optimization::AB_compare_int_type_costs{
     /// Addition of two u256 variables
     entry fun add_256(){
         let mut i:u64 = 0;
-        while(i < 1000){
+        while(i < 10000){
             let num1:u256 = 2;
             let num2:u256 = 3;
             let num3:u256 = num1 + num2;
+
+            i = i + 1;
+        }
+    }
+
+    /// Subtraction of variables:
+    /// Subtraction of two u8 variables
+    entry fun sub_u8(){
+        let mut i:u64 = 0;
+        while(i < 10000){
+            let num1:u8 = 3;
+            let num2:u8 = 2;
+            let num3:u8 = num1 - num2;
+
+            i = i + 1;
+        }
+    }
+
+    /// Subtraction of two u256 variables
+    entry fun sub_256(){
+        let mut i:u64 = 0;
+        while(i < 10000){
+            let num1:u256 = 3;
+            let num2:u256 = 2;
+            let num3:u256 = num1 - num2;
 
             i = i + 1;
         }
