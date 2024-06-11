@@ -15,7 +15,7 @@ module move_gas_optimization::AG_visibility_modifiers{
 
     public entry fun call_private() {
         let mut i:u64 = 0;
-        while (i < 1000) {
+        while (i < 10000) {
             let result:u64 = helper_private(2);
             i = i + 1;
         };
@@ -31,7 +31,7 @@ module move_gas_optimization::AG_visibility_modifiers{
 
     public entry fun call_public() {
         let mut i:u64 = 0;
-        while (i < 1000) {
+        while (i < 10000) {
             let result:u64 = helper_public(2);
             i = i + 1;
         };
@@ -46,7 +46,7 @@ module move_gas_optimization::AG_visibility_modifiers{
 
     public entry fun call_public_package() {
         let mut i:u64 = 0;
-        while (i < 1000) {
+        while (i < 10000) {
             let result:u64 = helper_public_package(2);
             i = i + 1;
         };
