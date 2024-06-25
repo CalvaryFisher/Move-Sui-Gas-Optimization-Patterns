@@ -31,7 +31,8 @@ module move_gas_optimization::AN_object_parallel_vectors {
         };
         transfer::transfer(object, tx_context::sender(ctx));
     }
-    
+
+    /// Adds +1 to every element of parallel vectors
     public entry fun parallel_vectors_add(object: &mut Parallel_Vectors){
         let length: u64 = vector::length(&object.vec1);
         let mut i: u64 = 0;
