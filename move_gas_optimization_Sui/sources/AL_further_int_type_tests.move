@@ -44,6 +44,7 @@ module move_gas_optimization::AL_further_int_type_tests{
             i = i + 1;
         }
     }
+    
 
     /// Function repeatedly defines u64 integer
     /// Addition performed so compiler doesn't ignore declared variable
@@ -63,6 +64,28 @@ module move_gas_optimization::AL_further_int_type_tests{
         while(i < 10000){
             let mut x:u128 = 4;
             x = x + 4;
+            i = i + 1;
+        }
+    }
+
+    /// Addition with u64 variable
+    entry fun assign_add_u64(){
+        let mut i:u64 = 0;
+        let mut num1:u64;
+        while(i < 10000){
+            num1 = 4;
+            num1 = num1 + 4;
+            i = i + 1;
+        }
+    }
+
+    /// Addition with u128 variable
+    entry fun assign_add_u128(){
+        let mut i:u64 = 0;
+        let mut num1:u128;
+        while(i < 10000){
+            num1 = 4;
+            num1 = num1 + 4;
             i = i + 1;
         }
     }
