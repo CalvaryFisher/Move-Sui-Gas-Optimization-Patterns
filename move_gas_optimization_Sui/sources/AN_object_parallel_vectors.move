@@ -56,13 +56,12 @@ module move_gas_optimization::AN_object_parallel_vectors {
     /// Searches parallel vectors for given key
     /// On average, can assume key will be found in the middle
     /// We only search 1 of the 3 arrays, similar to a real-world situation.
-    public entry fun parallel_vectors_search(key: u64, object: & Parallel_Vectors){
+    public entry fun parallel_vectors_search(key: u64, object: &mut Parallel_Vectors){
         //1) Get vector length:
-        let length: u64 = vector::length(&object.vec1);
-
+        let length = vector::length(&object.vec1);
         //2) Loop through each element
         let mut i: u64 = 0;
-        while(i < length){
+        while(i < 100){
             //2A) Check if it matches key
             let current_num = vector::borrow(& object.vec1, i);
             if(*current_num == key){
@@ -71,9 +70,21 @@ module move_gas_optimization::AN_object_parallel_vectors {
             }
         };
         //Runs if item never found
-        abort NOT_FOUND
+        //abort NOT_FOUND
         //3) Where we would return index, if entry functions could.
         //return i
+    }
+
+    /// Used to test why a function isn't working
+    public entry fun parallel_vectors_test(object: &mut Parallel_Vectors, e: u64){
+        //1) Get vector length:
+        let length = vector::length(&object.vec1);
+
+        //2) Loop through each element
+        let mut i: u64 = 0;
+        while(i < 1){
+        
+        }
     }
 
     ///Testing an object with 1 vector of a struct with 3 fields:
