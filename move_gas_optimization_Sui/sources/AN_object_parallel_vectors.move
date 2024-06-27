@@ -18,7 +18,7 @@ module move_gas_optimization::AN_object_parallel_vectors {
         let mut vec3 = vector::empty<u64>();
 
         let mut k:u64 = 0;
-        while (k < 100) {
+        while (k < 10000) {
             vector::push_back(&mut vec1, k);
             vector::push_back(&mut vec2, k);
             vector::push_back(&mut vec3, k);
@@ -54,37 +54,25 @@ module move_gas_optimization::AN_object_parallel_vectors {
     }
 
     /// Searches parallel vectors for given key
-    /// On average, can assume key will be found in the middle
     /// We only search 1 of the 3 arrays, similar to a real-world situation.
-    public entry fun parallel_vectors_search(key: u64, object: &mut Parallel_Vectors){
+    public entry fun parallel_vectors_search(object: & Parallel_Vectors, key: u64){        
         //1) Get vector length:
         let length = vector::length(&object.vec1);
         //2) Loop through each element
         let mut i: u64 = 0;
-        while(i < 100){
+        while(i < length){
             //2A) Check if it matches key
             let current_num = vector::borrow(& object.vec1, i);
             if(*current_num == key){
                 //2Aa) If so, break
                 break
-            }
+            };
+            i = i + 1;
         };
         //Runs if item never found
         //abort NOT_FOUND
         //3) Where we would return index, if entry functions could.
         //return i
-    }
-
-    /// Used to test why a function isn't working
-    public entry fun parallel_vectors_test(object: &mut Parallel_Vectors, e: u64){
-        //1) Get vector length:
-        let length = vector::length(&object.vec1);
-
-        //2) Loop through each element
-        let mut i: u64 = 0;
-        while(i < 1){
-        
-        }
     }
 
     ///Testing an object with 1 vector of a struct with 3 fields:
@@ -109,7 +97,7 @@ module move_gas_optimization::AN_object_parallel_vectors {
 
         //2) Loop through creating struct instances & storing in vector
         let mut i = 0;
-        while(i < 100){
+        while(i < 10000){
             //2A) Create struct instance storing values of i
             let temp_struct = Three_Slot_Struct{
                 field1: i,
@@ -149,5 +137,28 @@ module move_gas_optimization::AN_object_parallel_vectors {
 
             i = i + 1;
         }
+    }
+
+    /// Searches Vector of Struct for given key
+    /// We only search 1 of the 3 slots, similar to a real-world situation.
+    public entry fun vector_of_struct_search(object: & Vector_of_Struct, key: u64){        
+        //1) Get vector length:
+        let length = vector::length(&object.vec);
+        //2) Loop through vector
+        let mut i: u64 = 0;
+        while(i < length){
+            //2A) Access struct at current index
+            let struct_to_read = vector::borrow(& object.vec, i);
+            //2B) Check if field1 matches key
+            if(struct_to_read.field1 == key){
+                //2Ba) If so, break
+                break
+            };
+            i = i + 1;
+        };
+        //Runs if item never found
+        //abort NOT_FOUND
+        //3) Where we would return index, if entry functions could.
+        //return i
     }
 }
