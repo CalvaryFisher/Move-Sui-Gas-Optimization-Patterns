@@ -18,7 +18,7 @@ module move_gas_optimization::AN_object_parallel_vectors {
         let mut vec3 = vector::empty<u64>();
 
         let mut k:u64 = 0;
-        while (k < 600){
+        while (k < 10000){
             vector::push_back(&mut vec1, k);
             vector::push_back(&mut vec2, k);
             vector::push_back(&mut vec3, k);
@@ -121,7 +121,7 @@ module move_gas_optimization::AN_object_parallel_vectors {
 
         //2) Loop through creating struct instances & storing in vector
         let mut i = 0;
-        while(i < 600){
+        while(i < 10000){
             //2A) Create struct instance storing values of i
             let temp_struct = Three_Slot_Struct{
                 field1: i,
