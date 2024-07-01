@@ -1,4 +1,5 @@
 module move_gas_optimization::AQ_non_obj_parallel_vector{
+    
     public struct Parallel_Vectors has store, drop{
         vec1: vector<u64>,
         vec2: vector<u64>,
