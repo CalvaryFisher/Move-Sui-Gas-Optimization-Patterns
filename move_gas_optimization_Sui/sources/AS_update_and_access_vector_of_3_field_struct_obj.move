@@ -15,7 +15,7 @@ module move_gas_optimization::AS_update_and_access_vector_of_3_field_struct_obj{
     }
 
     /// Function creates a Vector_of_Struct object, fills vector and transfers to caller
-    public entry fun obj_create_pushback_Vector_of_Struct(ctx: &mut TxContext){
+    public entry fun create_Vector_of_Struct(ctx: &mut TxContext){
         //1) Create empty vector to store structs
         let mut temp_vector = vector::empty<Three_Slot_Struct>();
 
@@ -44,7 +44,7 @@ module move_gas_optimization::AS_update_and_access_vector_of_3_field_struct_obj{
         //4) Transfer object to transaction caller
         transfer::transfer(object, tx_context::sender(ctx));
     }
-
+    
     public entry fun obj_vector_of_struct_access(object: &mut Vector_of_Struct){
         //1) Get length of vector
         let length: u64 = vector::length(&object.vec);
