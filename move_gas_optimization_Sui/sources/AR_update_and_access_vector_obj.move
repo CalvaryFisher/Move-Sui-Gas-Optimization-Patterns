@@ -63,4 +63,20 @@ module move_gas_optimization::AR_update_and_access_vector_obj{
            i = i + 1;
         }
     }
+
+    /// Further tests on accessing a parallel vector:
+    public entry fun pass_object_to_empty_func(object: &mut Parallel_Vectors){
+        
+    }
+
+    public entry fun pass_immut_ref_object_to_empty_func(object: & Parallel_Vectors){
+        
+    }
+
+    /*
+    public entry fun pass_object_ownership_to_empty_func(object: Parallel_Vectors){
+        // Unpacking required
+        let Unpack_id { id } = object;
+    } 
+    */   
 }
