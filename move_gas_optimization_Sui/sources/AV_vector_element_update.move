@@ -60,6 +60,6 @@ module move_gas_optimization::AV_vector_element_update{
             i = i + 1;
         };
         //5) Copy value of local variable into vector using mutable reference
-        *mut_ref = local_var;
+        *mut_ref = local_var;      // We now modify actual vector element itself
     }
 }
