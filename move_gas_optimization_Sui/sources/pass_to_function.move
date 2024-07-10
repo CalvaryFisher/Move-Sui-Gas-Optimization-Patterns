@@ -73,11 +73,6 @@ module move_gas_optimization::pass_to_function {
             i = i + 1;
         };
     }
-    /*
-    public entry fun pass_by_value(object: MyObject) {   // Function won't compile (ownership passed to function, never transferred anywhere else.)
-        //object.x = new_value;     // won't compile - reference is not explicitely mutable
-    }
-    */
 
     public entry fun pass_by_value_and_transfer(object: MyObject, ctx: &mut TxContext) {
         let x: u8 = object.x;   // reads value
@@ -89,8 +84,33 @@ module move_gas_optimization::pass_to_function {
         transfer::freeze_object(object);
     }
 
-    public entry fun pass_by_value_and_share(object: MyObject) {
-        //let x: u8 = object.x;   // reads value
+    public entry fun pass_by_value_and_share(object: MyObject, ctx: &mut TxContext) {
+        // transfer::share_object<MyObject>(object);
+        transfer::share_object(object);
+    }
+
+    // Creates an object
+    public entry fun create_and_share(ctx: &mut TxContext) {
+        let mut vec = vector::empty<u64>();
+        let mut k:u64 = 0;
+        while (k < 100) {
+            vector::push_back(&mut vec, k);
+            k = k + 1;
+        };
+
+        let object = MyObject {
+                id: object::new(ctx),                
+                a:1000,
+                b:1000,
+                c:1000,
+                d:1000,
+                vec: vec,
+                w:10,
+                x:10,
+                y:10,
+                z:10
+            };
+
         transfer::share_object(object);
     }
 
@@ -120,4 +140,10 @@ module move_gas_optimization::pass_to_function {
 
     }
     */ 
+
+     /*
+    public entry fun pass_by_value(object: MyObject) {   // Function won't compile (ownership passed to function, never transferred anywhere else.)
+        //object.x = new_value;     // won't compile - reference is not explicitely mutable
+    }
+    */
 }
