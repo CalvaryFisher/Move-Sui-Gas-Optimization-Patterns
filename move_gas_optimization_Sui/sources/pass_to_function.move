@@ -1,4 +1,5 @@
 module move_gas_optimization::pass_to_function {
+
     public struct MyObject has key, store {
         id: UID,
         a:u128,
@@ -43,8 +44,15 @@ module move_gas_optimization::pass_to_function {
     public entry fun pass_by_mut_reference(object: &mut MyObject, new_value: u8) {
         object.x = new_value;
     }
-
-    public entry fun pass_by_value(object: MyObject, new_value: u8) {
+    
+    /*
+    public entry fun pass_by_value(object: MyObject, new_value: u8) {   // Function won't compile (ownership passed to function, never transferred anywhere else.)
         //object.x = new_value;     // won't compile - reference is not explicitely mutable
+    }
+    */
+    
+    public entry fun pass_by_value_and_transfer(object: MyObject, new_value: u8, ctx: &mut TxContext) {
+        //object.x = new_value;     // won't compile - reference is not explicitely mutable
+        transfer::transfer(object, tx_context::sender(ctx));
     }
 }
