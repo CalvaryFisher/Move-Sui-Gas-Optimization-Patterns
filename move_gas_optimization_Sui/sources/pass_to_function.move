@@ -12,7 +12,10 @@ module move_gas_optimization::pass_to_function {
         y:u8,
         z:u8
     }
+    public entry fun empty_fun_nothing_passed(){
 
+    }
+    // Creates an object
     public entry fun create_object(ctx: &mut TxContext) {
         let mut vec = vector::empty<u64>();
         let mut k:u64 = 0;
@@ -37,35 +40,58 @@ module move_gas_optimization::pass_to_function {
         transfer::transfer(object, tx_context::sender(ctx));
     }
     
-    public entry fun pass_by_reference(object: &MyObject, new_value: u8) {
-        //object.x = new_value;   // won't compile - reference is not explicitely mutable
+    public entry fun pass_by_reference(object: &MyObject) {
+        let x: u8 = object.x;   // reads value
     }
 
-    public entry fun pass_by_mut_reference(object: &mut MyObject, new_value: u8) {
-        object.x = new_value;
+    public entry fun pass_by_mut_reference(object: &mut MyObject) {
+        let x: u8 = object.x;   // reads value
     }
-    
+
+    // Used for comparison, repeatedly calls an empty function
+    public entry fun empty_loop_nothing_passed() {
+        let mut i = 0;
+        while(i < 10000){
+            empty_fun_nothing_passed();
+            i = i + 1;
+        };
+    }
+
+    public entry fun pass_by_reference_many(object: &MyObject) {
+        let mut i = 0;
+        while(i < 10000){
+            pass_by_reference(object);
+            i = i + 1;
+        };
+    }
+
+    public entry fun pass_by_mut_reference_many(object: &mut MyObject) {
+        let mut i = 0;
+        while(i < 10000){
+            pass_by_mut_reference(object);
+            i = i + 1;
+        };
+    }
     /*
-    public entry fun pass_by_value(object: MyObject, new_value: u8) {   // Function won't compile (ownership passed to function, never transferred anywhere else.)
+    public entry fun pass_by_value(object: MyObject) {   // Function won't compile (ownership passed to function, never transferred anywhere else.)
         //object.x = new_value;     // won't compile - reference is not explicitely mutable
     }
     */
 
-    public entry fun pass_by_value_and_transfer(object: MyObject, new_value: u8, ctx: &mut TxContext) {
-        //object.x = new_value;     // won't compile - reference is not explicitely mutable
+    public entry fun pass_by_value_and_transfer(object: MyObject, ctx: &mut TxContext) {
+        let x: u8 = object.x;   // reads value
         transfer::transfer(object, tx_context::sender(ctx));
     }
-
     /*
-    public entry fun delete_object(object: MyObject, new_value: u8) {
-        // object.x = new_value;    // won't compile - reference is not explicitely mutable
-
-        // object.id.delete(); // Won't compile (considered an implicit copy, since UID has key ability, cannot copy.)
-
+    public entry fun pass_by_value_and_transfer_many(object: MyObject, ctx: &mut TxContext) {
+        let mut i = 0;
+        while(i < 10000){
+            pass_by_value_and_transfer(object, ctx);
+            i = i + 1;
+        };    
     }
-    */ 
-    
-    public entry fun unpack_delete_object(object: MyObject, new_value: u8) {
+    */
+    public entry fun unpack_delete_object(object: MyObject) {
         // object.x = new_value;    // won't compile - reference is not explicitely mutable
 
         let MyObject {
@@ -82,6 +108,14 @@ module move_gas_optimization::pass_to_function {
         } = object;
 
         id.delete();
+    }
+
+    /*
+    public entry fun delete_object(object: MyObject, new_value: u8) {
+        // object.x = new_value;    // won't compile - reference is not explicitely mutable
+
+        // object.id.delete(); // Won't compile (considered an implicit copy, since UID has key ability, cannot copy.)
 
     }
+    */ 
 }
