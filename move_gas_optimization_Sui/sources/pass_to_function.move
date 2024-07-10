@@ -37,7 +37,7 @@ module move_gas_optimization::pass_to_function {
     }
     
     public entry fun pass_by_reference(object: &MyObject, new_value: u8) {
-        //object.x = new_value;   // won't allow change - reference is not explicitely mutable
+        //object.x = new_value;   // won't compile - reference is not explicitely mutable
     }
 
     public entry fun pass_by_mut_reference(object: &mut MyObject, new_value: u8) {
@@ -45,6 +45,6 @@ module move_gas_optimization::pass_to_function {
     }
 
     public entry fun pass_by_value(object: MyObject, new_value: u8) {
-        //object.x = new_value;     // won't allow change - reference is not explicitely mutable
+        //object.x = new_value;     // won't compile - reference is not explicitely mutable
     }
 }
