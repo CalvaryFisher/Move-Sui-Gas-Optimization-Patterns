@@ -50,9 +50,38 @@ module move_gas_optimization::pass_to_function {
         //object.x = new_value;     // won't compile - reference is not explicitely mutable
     }
     */
-    
+
     public entry fun pass_by_value_and_transfer(object: MyObject, new_value: u8, ctx: &mut TxContext) {
         //object.x = new_value;     // won't compile - reference is not explicitely mutable
         transfer::transfer(object, tx_context::sender(ctx));
+    }
+
+    /*
+    public entry fun delete_object(object: MyObject, new_value: u8) {
+        // object.x = new_value;    // won't compile - reference is not explicitely mutable
+
+        // object.id.delete(); // Won't compile (considered an implicit copy, since UID has key ability, cannot copy.)
+
+    }
+    */ 
+    
+    public entry fun unpack_delete_object(object: MyObject, new_value: u8) {
+        // object.x = new_value;    // won't compile - reference is not explicitely mutable
+
+        let MyObject {
+            id,
+            a,
+            b,
+            c,
+            d,
+            vec,
+            w,
+            x: _,
+            y,
+            z
+        } = object;
+
+        id.delete();
+
     }
 }
