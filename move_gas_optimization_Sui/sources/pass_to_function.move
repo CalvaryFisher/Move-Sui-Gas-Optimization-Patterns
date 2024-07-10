@@ -1,5 +1,6 @@
 module move_gas_optimization::pass_to_function {
-
+    use sui::transfer;
+    
     public struct MyObject has key, store {
         id: UID,
         a:u128,
@@ -82,18 +83,19 @@ module move_gas_optimization::pass_to_function {
         let x: u8 = object.x;   // reads value
         transfer::transfer(object, tx_context::sender(ctx));
     }
-    /*
-    public entry fun pass_by_value_and_transfer_many(object: MyObject, ctx: &mut TxContext) {
-        let mut i = 0;
-        while(i < 10000){
-            pass_by_value_and_transfer(object, ctx);
-            i = i + 1;
-        };    
+
+    public entry fun pass_by_value_and_freeze(object: MyObject) {
+        let x: u8 = object.x;   // reads value
+        transfer::freeze_object(object);
     }
-    */
+
+    public entry fun pass_by_value_and_share(object: MyObject) {
+        //let x: u8 = object.x;   // reads value
+        transfer::share_object(object);
+    }
+
     public entry fun unpack_delete_object(object: MyObject) {
         // object.x = new_value;    // won't compile - reference is not explicitely mutable
-
         let MyObject {
             id,
             a,
