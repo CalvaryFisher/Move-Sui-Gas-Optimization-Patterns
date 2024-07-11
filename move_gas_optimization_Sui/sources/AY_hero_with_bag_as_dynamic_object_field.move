@@ -1,8 +1,6 @@
-module move_gas_optimization::AY_hero_with_bag_as_dynamic_object_field{
-    use sui::dynamic_field;
+module move_gas_optimization::AY_hero_with_bag_in_dynamic_object_field{
     use sui::dynamic_object_field;
     use sui::bag;
-    use sui::object_bag;
 
     // Set up Hero object structure
     public struct Hero has key, store{
@@ -46,5 +44,89 @@ module move_gas_optimization::AY_hero_with_bag_as_dynamic_object_field{
         dynamic_object_field::add(&mut hero.id, b"bag", bag_object);
 
         transfer::transfer(hero, tx_context::sender(ctx));
+    }
+
+    // Create many hero objects. 
+    public entry fun create_heroes_with_bag_in_dynamic_obj_field(ctx: &mut TxContext){
+        let mut i = 0;
+        while (i < 125){
+            // Create Hero object
+            let mut hero = Hero{id: object::new(ctx)};
+
+            // creating bag
+            let mut bag_object = bag::new(ctx);
+
+            
+            // creating hero attributes
+            let mut sword = Sword{id: object::new(ctx), strength: 0};
+            let mut shield = Shield{id: object::new(ctx), strength: 0};
+            let mut hat = Hat{id: object::new(ctx), strength: 0};
+            
+            // adding hero attributes to bag
+            bag::add(&mut bag_object, 0, sword);
+            bag::add(&mut bag_object, 1, shield);
+            bag::add(&mut bag_object, 2, hat);
+
+            // adding bag as dynamic object field
+            dynamic_object_field::add(&mut hero.id, b"bag", bag_object);
+            transfer::transfer(hero, tx_context::sender(ctx));
+            i = i + 1;
+        }
+    }
+
+    // Repeatedly access hero accessories
+    public entry fun access_hero_with_bag_in_dynamic_obj_field(hero_obj_ref: &mut Hero){
+        let mut i = 0;
+        
+        let mut bag_ref: &mut bag::Bag = dynamic_object_field::borrow_mut(&mut hero_obj_ref.id, b"bag");
+        let mut sword: &mut Sword = bag::borrow_mut(bag_ref, 0);
+        let mut shield: &mut Shield = bag::borrow_mut(bag_ref, 1);
+        let mut hat: &mut Hat = bag::borrow_mut(bag_ref, 2);
+        i = i + 1;
+
+        while (i < 10000){
+            bag_ref = dynamic_object_field::borrow_mut(&mut hero_obj_ref.id, b"bag");
+            sword = bag::borrow_mut(bag_ref, 0);
+            shield = bag::borrow_mut(bag_ref, 1);
+            hat = bag::borrow_mut(bag_ref, 2);
+
+            i = i + 1;
+        }
+    }
+
+    // Repeatedly update hero accessories
+    public entry fun update_hero_with_bag_in_dynamic_obj_field(hero_obj_ref: &mut Hero){
+        let mut i = 0;
+        //First iteration:
+        //Get reference to bag within Hero
+        let mut bag_ref: &mut bag::Bag = dynamic_object_field::borrow_mut(&mut hero_obj_ref.id, b"bag");
+
+        //Get references to elements within bag
+        let mut sword: &mut Sword = bag::borrow_mut(bag_ref, 0);
+        sword.strength = sword.strength + 10;   //note: Must update before getting another mut reference using bag_ref
+
+        let mut shield: &mut Shield = bag::borrow_mut(bag_ref, 1);
+        shield.strength = shield.strength + 10;
+
+        let mut hat: &mut Hat = bag::borrow_mut(bag_ref, 2);
+        hat.strength = hat.strength + 10;
+
+        i = i + 1;
+        while (i < 10000){
+            //Get reference to bag within Hero
+            bag_ref = dynamic_object_field::borrow_mut(&mut hero_obj_ref.id, b"bag");
+
+            //Get references to elements within bag
+            sword = bag::borrow_mut(bag_ref, 0);
+            sword.strength = sword.strength + 10;   //note: Must update before getting another mut reference using bag_ref
+
+            shield = bag::borrow_mut(bag_ref, 1);
+            shield.strength = shield.strength + 10;
+
+            hat = bag::borrow_mut(bag_ref, 2);
+            hat.strength = hat.strength + 10;
+
+            i = i + 1;
+        }
     }
 }
