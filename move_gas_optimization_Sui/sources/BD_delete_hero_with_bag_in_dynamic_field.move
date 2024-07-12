@@ -86,6 +86,7 @@ module move_gas_optimization::BD_delete_hero_with_bag_in_dynamic_field{
         object::delete(id);
     }
 
+    /*
     public entry fun delete_heroes_with_bag_in_dynamic_fields(mut hero: Hero){
         let mut i:u64 = 0;
         while(i < 10000){
@@ -99,4 +100,5 @@ module move_gas_optimization::BD_delete_hero_with_bag_in_dynamic_field{
             i = i + 1;
         }
     }
+    */
 }
