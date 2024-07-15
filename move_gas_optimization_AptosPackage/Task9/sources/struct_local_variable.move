@@ -25,4 +25,11 @@ module move_gas_optimization::struct_local_variable {
         };
         struct1.value = local_var;
     }
+
+    public entry fun create_struct() {
+        let struct1 = MyStruct {
+            value: 0
+        };
+        //struct1.value = struct1.value + 1;
+    }
 }
