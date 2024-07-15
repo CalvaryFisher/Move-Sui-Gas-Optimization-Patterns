@@ -1,9 +1,0 @@
-[package]
-name = "aptos_code"
-version = "0.0.1"
-
-[addresses]
-move_gas_optimization = "0x6b61a9dae4bd44cbb19c163d4ca654e0c680c4907813b6cc62480ce2c545e128"
-
-[dependencies]
-AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "testnet" }
