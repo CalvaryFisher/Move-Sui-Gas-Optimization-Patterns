@@ -15,7 +15,7 @@ module move_gas_optimization::BM_small_object_operation_tests{
         };
         transfer::transfer(test_object, tx_context::sender(ctx));
 
-        while (i < 5000){
+        while (i < 2000){
             test_object = Test_Obj{
                 id: object::new(ctx),
                 value: 0
@@ -30,7 +30,7 @@ module move_gas_optimization::BM_small_object_operation_tests{
         let mut read_value: u64 = object.value;
         i = i + 1;
 
-        while (i < 5000){
+        while (i < 2000){
             read_value = object.value;
             i = i + 1;
         }
@@ -41,7 +41,7 @@ module move_gas_optimization::BM_small_object_operation_tests{
         object.value = object.value + 1;
         i = i + 1;
 
-        while (i < 5000){
+        while (i < 2000){
             object.value = object.value + 1;
             i = i + 1;
         }
